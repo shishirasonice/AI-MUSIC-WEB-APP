@@ -5,7 +5,10 @@ leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;    
 scoreleftwrist = 0;
+scorerightwrist = 0;
 song_name = "";
+song_1 = "";
+song_2 = "";
 
 function preload(){
     song1 = loadSound("hedwigs-theme-song.mp3");
@@ -36,6 +39,31 @@ function draw(){
 
     song_name = song1.isPlaying();
     console.log(song_name)
+     
+    if(scoreleftwrist > 0.2){
+        circle(leftWristX, leftWristY, 20);
+        song1.stop();
+        if(song2 == false){
+            song2.play();
+        }
+        else{
+            console.log("Song Name: My Heart Will Go On");
+            document.getElementById("song-name").innerHTML = "Song Name: My Heart Will Go On";
+        }
+    }
+
+    if(scorerightwrist > 0.2){
+        circle(rightWristX, rightWristY, 20);
+        song2.stop();
+        if(song1 == false){
+            song1.play();
+        }
+        else{
+            console.log("Song Name: Hedwigs Theme Song");
+            document.getElementById("song-name").innerHTML = "Song Name: Hedwigs Theme Song";
+        }
+    }
+
 }
 
 function gotPoses(results){
@@ -45,6 +73,9 @@ function gotPoses(results){
 
         scoreleftwrist = results[0].pose.keypoints[9].score;
         console.log(scoreleftwrist);
+
+        scorerightwrist = results[0].pose.keypoints[10].score;
+        console.log(scorerightwrist);
 
         leftWristX = results[0].pose.leftWristX.x;
         leftWristY = results[0].pose.leftWristY.y;
